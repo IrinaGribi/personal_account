@@ -1,4 +1,4 @@
-from masks import get_mask_card_number, get_mask_account
+from src.masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(card_info: str) -> str:
@@ -7,7 +7,7 @@ def mask_account_card(card_info: str) -> str:
     card_type = card_info[:last_space_index]
     number = card_info[last_space_index + 1:]
 
-    if card_type.lower() == "Счет":
+    if card_type.lower() == "счет":
         masked_number = get_mask_account(number)
     else:
         masked_number = get_mask_card_number(number)
