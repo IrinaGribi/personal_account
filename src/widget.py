@@ -17,6 +17,9 @@ def mask_account_card(card_info: str) -> str:
 
 def get_date(date_string: str) -> str:
     """Возвращает строку с датой в формате ДД.ММ.ГГГГ"""
-    date_part = date_string.split('T')[0]
-    year, month, day = date_part.split('-')
-    return f"{day}.{month}.{year}"
+    if len(date_string) < 10:
+        raise ValueError("Дата не может быть пустой")
+    else:
+        date_part = date_string.split('T')[0]
+        year, month, day = date_part.split('-')
+        return f"{day}.{month}.{year}"
