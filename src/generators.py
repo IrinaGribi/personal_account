@@ -35,3 +35,4 @@ def card_number_generator(start, end):
         card_number = f"{number:016d}"
         yield f"{card_number[:4]} {card_number[4:8]} {card_number[8:12]} {card_number[12:]}"
 
+
