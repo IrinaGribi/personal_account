@@ -6,14 +6,25 @@ from src.generators import card_number_generator, filter_by_currency, transactio
 # Тесты filter_by_currency
 def test_filter_by_usd_currency(example_transactions):
     """Тест фильтрации по USD валюте"""
-    usd_transactions = list(filter_by_currency(example_transactions, "USD")) # все транзакции USD
+    usd_transactions = list(filter_by_currency(example_transactions, "USD"))  # все транзакции USD
     assert len(usd_transactions) == 3
 
 
 def test_filter_by_rub_currency(example_transactions):
     """Тест фильтрации по RUB валюте"""
-    rub_transactions = list(filter_by_currency(example_transactions, "RUB")) # все транзакции RUB
+    rub_transactions = list(filter_by_currency(example_transactions, "RUB"))  # все транзакции RUB
     assert len(rub_transactions) == 2
+
+
+@pytest.mark.parametrize("currency_code,expected_count", [
+    ("USD", 3),
+    ("RUB", 2),
+    ("EUR", 0),
+])
+def test_filter_by_currency(example_transactions, currency_code, expected_count):
+    """Параметризованный тест вывода транзакций"""
+    result = list(filter_by_currency(example_transactions, currency_code))
+    assert len(result) == expected_count
 
 
 def test_filter_by_nonexistent_currency(example_transactions):
@@ -33,10 +44,10 @@ def test_filter_empty_list(example_transactions):
 def test_filter_malformed_transactions():
     """Тест обработки некорректно сформированных транзакций"""
     malformed_transactions = [
-        {"id": 1, "description": "Test"}, # Транзакция без operationAmount
-        {"id": 2, "operationAmount": {"amount": "100"}}, # Транзакция без currency
-        {"id": 3, "operationAmount": {"currency": {"name": "USD"}}}, # Транзакция без code в currency
-        {"id": 4, "operationAmount": {"currency": {"code": "USD"}}}, # Нормальная транзакция
+        {"id": 1, "description": "Test"},  # Транзакция без operationAmount
+        {"id": 2, "operationAmount": {"amount": "100"}},  # Транзакция без currency
+        {"id": 3, "operationAmount": {"currency": {"name": "USD"}}},  # Транзакция без code в currency
+        {"id": 4, "operationAmount": {"currency": {"code": "USD"}}},  # Нормальная транзакция
     ]
     usd_transactions = list(filter_by_currency(malformed_transactions, "USD"))
     assert len(usd_transactions) == 1
@@ -98,6 +109,19 @@ def test_single_transaction(example_transactions):
     assert descriptions_list[0] == "Перевод организации"
 
 
+@pytest.mark.parametrize("index,expected_description", [
+    (0, "Перевод организации"),
+    (1, "Перевод со счета на счет"),
+    (2, "Перевод со счета на счет"),
+    (3, "Перевод с карты на карту"),
+    (4, "Перевод организации"),
+])
+def test_transaction_descriptions(example_transactions, index, expected_description):
+    """Параметризованный тест вывода описаний транзакций"""
+    descriptions = list(transaction_descriptions(example_transactions))
+    assert descriptions[index] == expected_description
+
+
 # Тесты card_number_generator
 def test_basic_range_generation():
     """Тест генерации базового диапазона номеров карт"""
@@ -139,3 +163,16 @@ def test_lazy_evaluation():
     assert second_card == "0000 0000 0000 0002"
     third_card = next(generator)
     assert third_card == "0000 0000 0000 0003"
+
+
+@pytest.mark.parametrize("start,end,expected_first", [
+    (1, 3, "0000 0000 0000 0001"),
+    (10, 12, "0000 0000 0000 0010"),
+    (100, 100, "0000 0000 0000 0100"),
+    (1000, 1001, "0000 0000 0000 1000"),
+])
+def test_card_number_generator(start, end, expected_first):
+    """Параметризованный тест вывода номеров карт"""
+    result = list(card_number_generator(start, end))
+    assert result[0] == expected_first
+    assert len(result) == end - start + 1
