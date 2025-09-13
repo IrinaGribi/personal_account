@@ -16,20 +16,28 @@ def log(filename=None):
                 result = func(*args, **kwargs)
 
                 # Формируем сообщение об успешном выполнении
-                log_message = f"{func_name} ok\n"
+                log_message = f"{func_name} ok"
 
-                # Записываем лог
-                _write_log(log_message, filename)
+                # Записываем лог в файл или консоль
+                if filename:
+                    with open(filename, 'a', encoding='utf-8') as f:
+                        f.write(log_message + '\n')
+                else:
+                    print(log_message)
 
                 return result
 
             except Exception as e:
                 # Формируем сообщение об ошибке
                 error_type = type(e).__name__
-                log_message = f"{func_name} error: {error_type}. Inputs: {args}, {kwargs}\n"
+                log_message = f"{func_name} error: {error_type}. Inputs: {args}, {kwargs}"
 
-                # Записываем лог
-                _write_log(log_message, filename)
+                # Записываем лог в файл или консоль
+                if filename:
+                    with open(filename, 'a', encoding='utf-8') as f:
+                        f.write(log_message + '\n')
+                else:
+                    print(log_message)
 
                 # Перевызываем исключение
                 raise
@@ -37,14 +45,3 @@ def log(filename=None):
         return wrapper
 
     return decorator
-
-
-def _write_log(message, filename):
-    """
-    Вспомогательная функция для записи лога в файл или консоль
-    """
-    if filename:
-        with open(filename, 'a', encoding='utf-8') as f:
-            f.write(message)
-    else:
-        print(message.rstrip())
