@@ -61,25 +61,25 @@ def test_account_number_with_spaces() -> str:
     assert get_mask_account("1234 5678 9012 3456 3456") == "**3456"
 
 
-def test_short_card_number() -> None:
+def test_short_account_number() -> None:
     """Тестирование короткого номера cчета"""
     with pytest.raises(ValueError):
         get_mask_account("152369")
 
 
-def test_long_card_number() -> None:
+def test_long_account_number() -> None:
     """Тестирование длинного номера счета"""
     with pytest.raises(ValueError):
         get_mask_account("152369852126984563264467463")
 
 
-def test_empty_string() -> None:
+def test_empty_string_account() -> None:
     """Тестирование пустой строки"""
     with pytest.raises(ValueError):
         get_mask_account("")
 
 
-def test_card_number_with_letters() -> None:
+def test_account_with_letters() -> None:
     """Тестирование номера счета с буквами"""
     with pytest.raises(ValueError):
         get_mask_account("1563advb665")
@@ -94,6 +94,6 @@ def test_card_number_with_letters() -> None:
         ("60111111 1111 11171117", "**1117"),
     ],
 )
-def test_various_card_types(card_number: str, expected: str):
+def test_various_account_types(card_number: str, expected: str):
     """Параметризованный тест маски счета"""
     assert get_mask_account(card_number) == expected
