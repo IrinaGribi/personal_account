@@ -1,0 +1,4 @@
+multiply ok
+divide error: ZeroDivisionError. Inputs: (10, 0), {}
+multiply ok
+divide error: ZeroDivisionError. Inputs: (10, 0), {}
