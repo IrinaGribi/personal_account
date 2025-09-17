@@ -1,9 +1,21 @@
 import pytest
 
 
+@pytest.fixture
+def temp_log_file(tmp_path):
+    """
+    Фикстура для создания временного файла лога
+    для модуля decorators
+    """
+    return tmp_path / "log.txt"
+
+
 @pytest.fixture()
 def example_transactions():
-    """Фикстура для тестирования модуля generators"""
+    """
+    Фикстура для тестирования модуля generators
+    с тестовыми транзакциями
+    """
     return (
         [
             {

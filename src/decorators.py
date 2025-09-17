@@ -20,8 +20,8 @@ def log(filename=None):
 
                 # Записываем лог в файл или консоль
                 if filename:
-                    with open(filename, 'a', encoding='utf-8') as f:
-                        f.write(log_message + '\n')
+                    with open(filename, "a", encoding="utf-8") as f:
+                        f.write(log_message + "\n")
                 else:
                     print(log_message)
 
@@ -34,8 +34,8 @@ def log(filename=None):
 
                 # Записываем лог в файл или консоль
                 if filename:
-                    with open(filename, 'a', encoding='utf-8') as f:
-                        f.write(log_message + '\n')
+                    with open(filename, "a", encoding="utf-8") as f:
+                        f.write(log_message + "\n")
                 else:
                     print(log_message)
 
