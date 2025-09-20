@@ -2,6 +2,27 @@ import pytest
 
 
 @pytest.fixture
+def example_csv_data():
+    """
+    Пример данных CSV в виде строки
+    Фикстура для file_reader
+    """
+    return "date;amount;description\n2024-01-01;1000;Зарплата\n2024-01-02;-500;Продукты"
+
+
+@pytest.fixture
+def example_transactions_list():
+    """
+    Пример списка транзакций — то, что должна вернуть функция
+    Фикстура для file_reader
+    """
+    return [
+        {"date": "2024-01-01", "amount": "1000", "description": "Зарплата"},
+        {"date": "2024-01-02", "amount": "-500", "description": "Продукты"}
+    ]
+
+
+@pytest.fixture
 def temp_log_file(tmp_path):
     """
     Фикстура для создания временного файла лога

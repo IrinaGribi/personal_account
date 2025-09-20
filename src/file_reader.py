@@ -1,5 +1,6 @@
-import pandas as pd
 import csv
+
+import pandas as pd
 
 
 def read_transactions_csv(file_path):
@@ -27,4 +28,4 @@ if __name__ == "__main__":
     file_path = "../data/transactions.csv"
     file_path_2 = "../data/transactions_excel.xlsx"
     print(read_transactions_csv(file_path))
-    #print(read_transactions_excel(file_path_2))
+    print(read_transactions_excel(file_path_2))
