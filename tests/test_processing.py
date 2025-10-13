@@ -198,7 +198,7 @@ def test_returns_zero_for_categories_with_no_matches():
     assert result == expected
 
 
-def test_search_is_case_insensitive():
+def test_search_is_case_independent():
     """Проверяет, что поиск по категориям не зависит от регистра."""
     data = [{"description": "ЗАРПЛАТА"}, {"description": "покупка"}]
     categories = ["зарплата", "ПОКУПКА"]

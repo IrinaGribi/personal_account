@@ -18,7 +18,7 @@ def test_read_transactions_csv_success():
     )
 
     # Мокаем открытие файла
-    with patch("builtins.open", mock_open(read_data=csv_content)) as mock_file:
+    with patch("builtins.open", mock_open(read_data=csv_content)):
         result = read_transactions_csv("transactions.csv")
 
     # Ожидаемый результат после обработки функцией

@@ -1,12 +1,10 @@
-import sys
 from pathlib import Path
 
-sys.path.append(str(Path(__file__).parent))
 
-from src.utils import load_financial_transactions
-from src.file_reader import read_transactions_csv, read_transactions_excel
-from src.processing import filter_by_state, sort_by_date, process_bank_search
 from src.external_api import get_transaction_amount_in_rubles
+from src.file_reader import read_transactions_csv, read_transactions_excel
+from src.processing import filter_by_state, process_bank_search, sort_by_date
+from src.utils import load_financial_transactions
 from src.widget import get_date, mask_account_card
 
 
@@ -88,7 +86,7 @@ def main():
     sort_choice = input("Программа: Отсортировать операции по дате? Да/Нет\nПользователь: ").strip().lower()
     if sort_choice in ("да", "д", "yes", "y"):
         order_choice = input("Программа: Отсортировать по возрастанию или по убыванию?\nПользователь: ").strip().lower()
-        reverse = True  # по умолчанию — убывание
+        reverse = True
         if "возрастанию" in order_choice:
             reverse = False
         elif "убыванию" in order_choice:
